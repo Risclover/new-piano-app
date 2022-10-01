@@ -62,6 +62,11 @@ body {
   border-bottom-right-radius: 12px;
   background-color: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.397) 0px 0px 5px 0px inset !important;
+  transition: 0.5s ease;
+}
+
+.white:hover {
+  background-color: rgb(157, 213, 255);
 }
 
 .white-keydown {
@@ -74,8 +79,8 @@ body {
   padding-bottom: 20px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
-  background-color: rgb(233, 255, 250);
-  box-shadow: rgba(0, 0, 0, 0.824) 0px -5px 10px 0px inset !important;
+  background-color: rgb(165, 216, 255);
+  box-shadow: rgba(51, 46, 153, 0.584) 0px -2px 10px 2px inset !important;
 }
 
 .black {
@@ -92,6 +97,27 @@ body {
   justify-content: center;
   padding-bottom: 20px;
   box-shadow: rgba(255, 255, 255, 0.846) 0px 2px 4px 0px inset;
+  transition: 0.5s ease;
+}
+
+.black:hover {
+  background-color: rgb(8, 49, 74);
+}
+
+.black-keydown {
+  border: 1px solid black;
+  width: 45px;
+  height: 100%;
+  position: absolute;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  color: white;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 20px;
+  box-shadow: rgba(255, 255, 255, 0.846) 0px 2px 4px 0px inset;
+  background-color: rgb(8, 49, 74);
 }
 
 .black-1,
