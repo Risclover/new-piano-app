@@ -2,10 +2,11 @@ class Note {
   constructor(...params) {
     [this.inputKey, this.path, this.selector, this.classUp, this.classDown] = params;
     this.htmlElement = document.querySelector(this.selector);
+    this.down = false;
   }
 
   play(inputKey) {
-    if (inputKey !== this.inputKey) return;
+    if (inputKey !== this.inputKey || this.down) return;
     playAudio(this.path);
     this.lower();
   }
@@ -13,12 +14,14 @@ class Note {
   lower() {
     this.htmlElement.classList.add(this.classDown);
     this.htmlElement.classList.remove(this.classUp);
+    this.down = true;
   }
 
   raise(inputKey) {
     if (inputKey !== this.inputKey) return;
     this.htmlElement.classList.add(this.classUp);
     this.htmlElement.classList.remove(this.classDown);
+    this.down = false;
   }
 }
 
