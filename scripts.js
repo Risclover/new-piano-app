@@ -7,10 +7,11 @@ class Note {
   constructor(...params) {
     [this.inputKey, this.path, this.selector, this.classUp, this.classDown] = params;
     this.htmlElement = document.querySelector(this.selector);
+    this.down = false;
   }
 
-  play(inputKey, isRecorded = false) {
-    if (inputKey !== this.inputKey) return;
+  play(inputKey) {
+    if (inputKey !== this.inputKey || this.down) return;
     playAudio(this.path);
     this.lower();
     if (isRecorded) {
@@ -29,12 +30,14 @@ class Note {
   lower() {
     this.htmlElement.classList.add(this.classDown);
     this.htmlElement.classList.remove(this.classUp);
+    this.down = true;
   }
 
   raise(inputKey) {
     if (inputKey !== this.inputKey) return;
     this.htmlElement.classList.add(this.classUp);
     this.htmlElement.classList.remove(this.classDown);
+    this.down = false;
   }
 }
 
