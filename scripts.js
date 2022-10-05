@@ -7,7 +7,7 @@ sunIcon.style.display = "none";
 function updatePlayArea(song) {
   localStorage.playArea = song;
   playArea.value = song;
-  window.history.pushState("object or string", "Title", "/?song=" + playArea.value);
+  window.history.pushState("object or string", "Title", "/new-piano-app/?song=" + playArea.value);
 }
 
 if (localStorage.recordArea) recordArea.value = localStorage.recordArea;
@@ -81,8 +81,7 @@ class Note {
     }
 
     localStorage.recordArea = recordArea.value;
-    localStorage.playArea = playArea.value;
-    window.history.pushState("object or string", "Title", "/?song=" + playArea.value);
+    updatePlayArea(playArea.value);
   }
 
   lower() {
