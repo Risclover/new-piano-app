@@ -1,3 +1,8 @@
+if (localStorage.recordArea) recordArea.value = localStorage.recordArea;
+if (localStorage.playArea) playArea.value = localStorage.playArea;
+
+const DELAY = 250;  // ms
+
 class Note {
   constructor(...params) {
     [this.inputKey, this.path, this.selector, this.classUp, this.classDown] = params;
@@ -9,6 +14,17 @@ class Note {
     if (inputKey !== this.inputKey || this.down) return;
     playAudio(this.path);
     this.lower();
+    if (isRecorded) {
+      setTimeout(() => this.raise(this.inputKey), DELAY);
+      return;
+    };
+
+    recordArea.value += this.inputKey;
+    if (playArea !== document.activeElement)
+      playArea.value += this.inputKey;
+
+    localStorage.recordArea = recordArea.value;
+    localStorage.playArea = playArea.value;
   }
 
   lower() {
@@ -55,18 +71,69 @@ const notes = [
   new Note("p", "./piano-notes/5-ds-cut-fade.mp3", ".black-7", "black", "black-keydown"),
 ]
 
-document.addEventListener("keydown", function (e) {
+document.addEventListener("keydown", e => {
   notes.forEach(note => note.play(e.key));
 });
 
-document.addEventListener("keyup", function (e) {
+document.addEventListener("keyup", e => {
   notes.forEach(note => note.raise(e.key));
 });
 
-document.addEventListener("mousedown", function (e) {
+piano.addEventListener("mousedown", e => {
   notes.forEach(note => note.play(e.target.innerText.toLowerCase()));
 });
 
-document.addEventListener("mouseup", function (e) {
+piano.addEventListener("mouseup", e => {
   notes.forEach(note => note.raise(e.target.innerText.toLowerCase()));
 });
+
+const h1 = document.querySelector("h1");
+const darkModeColor = "#181A1B";
+const lightModeColor = "#f7f7f7";
+let isDarkMode = false;
+sunIcon.style.display = "none";
+darkModeButton.addEventListener("click", e => {
+  isDarkMode = !isDarkMode;
+  if (isDarkMode) {
+    document.body.style.backgroundColor = darkModeColor;
+    h1.style.color = lightModeColor;
+    moonIcon.style.display = "none";
+    sunIcon.style.display = "block";
+    darkModeButton.style.backgroundColor = darkModeColor;
+  } else {
+    document.body.style.backgroundColor = lightModeColor;
+    h1.style.color = darkModeColor;
+    moonIcon.style.display = "block";
+    sunIcon.style.display = "none";
+    darkModeButton.style.backgroundColor = lightModeColor;
+  }
+})
+
+darkModeButton.addEventListener("mouseenter", e => {
+  darkModeButton.style.border = isDarkMode ? `1px solid ${lightModeColor}` : `1px solid ${darkModeColor}`;
+});
+
+darkModeButton.addEventListener("mouseleave", e => {
+  darkModeButton.style.border = isDarkMode ? `1px solid ${darkModeColor}` : `1px solid ${lightModeColor}`;
+});
+
+let recording = [];
+playButton.addEventListener("click", e => {
+  recording = playArea.value.split('');
+  playRecording();
+})
+
+function playRecording() {
+  if (recording.length === 0) return;
+  const inputKey = recording.shift();
+  notes.forEach(note => note.play(inputKey, true));
+  setTimeout(() => playRecording(), DELAY);
+}
+
+recordArea.addEventListener("input", e => {
+  localStorage.recordArea = recordArea.value;
+})
+
+playArea.addEventListener("input", e => {
+  localStorage.playArea = playArea.value;
+})

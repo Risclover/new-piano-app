@@ -4,141 +4,54 @@
   box-sizing: border-box;
 }
 
+svg {
+  width: 25px;
+  height: 24px;
+  /* border: 1px solid black; */
+}
+
 body,
 html {
   font-family: "Heebo", sans-serif;
   font-weight: 900;
   font-size: 20px;
-  background-color: #f7f7f7;
 }
 
 body {
   padding: 10px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.piano {
-  width: min-content;
-  height: 250px;
-  display: flex;
-  /* position: relative; */
-  margin: 0 auto;
-  background-color: black;
-  border: 3px solid black;
-  border-bottom: 5px solid black;
-  border-top: 0;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
+#darkModeButton {
+  box-sizing: border-box;
   margin-right: -50%;
-  transform: translate(-50%, -50%);
+  border: 1px solid white;
+  background-color: white;
 }
 
-.piano-left {
-  position: absolute;
-  width: 112px;
-  height: 60%;
-  left: 32px;
+#sunIcon {
+  filter: invert(100%) sepia(0%) saturate(7492%) hue-rotate(7deg) brightness(104%) contrast(102%);
 }
 
-.piano-middle {
-  position: absolute;
-  width: 172px;
-  height: 60%;
-  left: 210px;
-}
-
-.piano-right {
-  position: absolute;
-  width: 112px;
-  height: 60%;
-  right: 36px;
-}
-
-.white {
+textarea {
+  width: 300px;
+  height: 100px;
   border: 1px solid black;
-  width: 60px;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 20px;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  background-color: rgb(255, 255, 255);
-  box-shadow: rgba(0, 0, 0, 0.397) 0px 0px 5px 0px inset !important;
-  transition: 0.5s ease;
 }
 
-.white:hover {
-  background-color: rgb(157, 213, 255);
+#recordArea {
+  display: block;
+  background-color: rgb(240, 240, 240);
 }
 
-.white-keydown {
-  border: 1px solid black;
-  width: 60px;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 20px;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  background-color: rgb(165, 216, 255);
-  box-shadow: rgba(51, 46, 153, 0.584) 0px -2px 10px 2px inset !important;
+#playArea {
+  display: block;
 }
 
-.black {
-  border: 1px solid black;
-  width: 45px;
-  height: 100%;
-  position: absolute;
-  background-color: black;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  color: white;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 20px;
-  box-shadow: rgba(255, 255, 255, 0.846) 0px 2px 4px 0px inset;
-  transition: 0.5s ease;
-}
-
-.black:hover {
-  background-color: rgb(8, 49, 74);
-}
-
-.black-keydown {
-  border: 1px solid black;
-  width: 45px;
-  height: 100%;
-  position: absolute;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  color: white;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 20px;
-  box-shadow: rgba(255, 255, 255, 0.846) 0px 2px 4px 0px inset;
-  background-color: rgb(8, 49, 74);
-}
-
-.black-1,
-.black-3,
-.black-6 {
-  left: 5px;
-}
-
-.black-2,
-.black-5,
-.black-7 {
-  right: 0px;
-}
-
-.black-4 {
-  left: 66px;
+#playButton {
+  background-color: "red";
 }
