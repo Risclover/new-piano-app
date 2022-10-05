@@ -82,6 +82,7 @@ function playAudio(src) {
   const source = document.createElement("source");
   source.src = src;
   audio.appendChild(source);
+  audio.volume = 0.2;
   audio.play();
   // TODO: Do we need to clean up these DOM elements?
 }
@@ -157,6 +158,12 @@ darkModeButton.addEventListener("mouseleave", e => {
 let notesToPlay = [];
 let isChord = false;
 playButton.addEventListener("click", e => {
+  if (playButton.innerText === "Stop") {
+    playButton.innerText = "Play";
+    notesToPlay = [];
+    return;
+  }
+  playButton.innerText = "Stop";
   notesToPlay = [];
   for (let i = 0; i < playArea.value.length; i++) {
     const symbol = playArea.value[i];
