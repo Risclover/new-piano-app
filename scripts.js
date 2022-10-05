@@ -10,7 +10,7 @@ class Note {
     this.down = false;
   }
 
-  play(inputKey) {
+  play(inputKey, isRecorded = false) {
     if (inputKey !== this.inputKey || this.down) return;
     playAudio(this.path);
     this.lower();
