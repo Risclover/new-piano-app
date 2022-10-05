@@ -4,21 +4,25 @@ const lightModeColor = "#f7f7f7";
 let isDarkMode = false;
 sunIcon.style.display = "none";
 
-if (localStorage.recordArea) recordArea.value = localStorage.recordArea;
-if (localStorage.playArea) playArea.value = localStorage.playArea;
-window.history.pushState("object or string", "Title", "/?song=" + playArea.value);
-if (localStorage.volume) volumeSlider.value = localStorage.volume;
-if (localStorage.dark === "true") {
-  isDarkMode = true;
-  enableDarkMode();
+function updatePlayArea(song) {
+  localStorage.playArea = song;
+  playArea.value = song;
+  window.history.pushState("object or string", "Title", "/?song=" + playArea.value);
 }
+
+if (localStorage.recordArea) recordArea.value = localStorage.recordArea;
+
+const urlSong = window.location.href.split("=")[1];
+if (urlSong) updatePlayArea(urlSong)
+else if (localStorage.playArea) updatePlayArea(localStorage.playArea);
+else updatePlayArea(playArea.value);
+
+if (localStorage.volume) volumeSlider.value = localStorage.volume;
+if (localStorage.dark === "true") enableDarkMode();
 
 recordArea.scrollTop = recordArea.scrollHeight;
 playArea.scrollTop = playArea.scrollHeight;
 volumeTextInput.value = volumeSlider.value;
-
-const urlSong = window.location.href.split("=")[1];
-if (urlSong) playArea.value = urlSong;
 
 const DELAY = 250;  // ms
 const CHORD_THRESHOLD = 15;  // ms
@@ -144,6 +148,7 @@ piano.addEventListener("mouseup", e => {
 });
 
 function enableDarkMode() {
+  isDarkMode = true;
   document.body.style.backgroundColor = darkModeColor;
   h1.style.color = lightModeColor;
   moonIcon.style.display = "none";
@@ -217,14 +222,11 @@ function playRecording() {
 }
 
 playArea.addEventListener("input", e => {
-  localStorage.playArea = playArea.value;
-  window.history.pushState("object or string", "Title", "/?song=" + playArea.value);
+  updatePlayArea(playArea.value);
 })
 
 clearPlayAreaButton.addEventListener("click", e => {
-  localStorage.playArea = "";
-  window.history.pushState("object or string", "Title", "/?song=" + playArea.value);
-  playArea.value = "";
+  updatePlayArea("");
 })
 
 clearRecordAreaButton.addEventListener("click", e => {
