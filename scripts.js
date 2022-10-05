@@ -188,7 +188,10 @@ playButton.addEventListener("click", e => {
 })
 
 function playRecording() {
-  if (notesToPlay.length === 0) return;
+  if (notesToPlay.length === 0) {
+    playButton.innerText = "Play";
+    return;
+  };
   const inputKeys = notesToPlay.shift();  // TODO: Use an index instead of mutating. Clear after max index
   inputKeys.forEach(inputKey => notes.forEach(note => note.play(inputKey, true)))
   setTimeout(() => playRecording(), DELAY);
