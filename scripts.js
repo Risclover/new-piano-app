@@ -45,16 +45,26 @@ setInterval(() => {
   time = newTime;
 }, CHORD_THRESHOLD);
 
+function createAudio() {
+  this.audio = new Audio();
+  const source = document.createElement("source");
+  source.src = this.path;
+  this.audio.appendChild(source);
+}
+
 class Note {
   constructor(...params) {
     [this.inputKey, this.path, this.selector, this.classUp, this.classDown] = params;
     this.htmlElement = document.querySelector(this.selector);
     this.down = false;
+    createAudio.call(this);
   }
 
   play(inputKey, isRecorded = false) {
     if (inputKey !== this.inputKey || this.down) return;
-    playAudio(this.path);
+    if (this.audio.duration > 0 && !this.audio.paused) createAudio.call(this);
+    this.audio.volume = volumeSlider.value;
+    this.audio.play();
     this.lower();
     if (isRecorded) {
       setTimeout(() => this.raise(this.inputKey), DELAY);
@@ -96,16 +106,6 @@ class Note {
     this.htmlElement.classList.remove(this.classDown);
     this.down = false;
   }
-}
-
-function playAudio(src) {
-  const audio = new Audio();
-  const source = document.createElement("source");
-  source.src = src;
-  audio.appendChild(source);
-  audio.volume = volumeSlider.value;
-  audio.play();
-  // TODO: Do we need to clean up these DOM elements?
 }
 
 const notes = [
