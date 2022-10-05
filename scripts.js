@@ -1,5 +1,7 @@
 if (localStorage.recordArea) recordArea.value = localStorage.recordArea;
 if (localStorage.playArea) playArea.value = localStorage.playArea;
+recordArea.scrollTop = recordArea.scrollHeight;
+playArea.scrollTop = playArea.scrollHeight;
 
 const DELAY = 250;  // ms
 
