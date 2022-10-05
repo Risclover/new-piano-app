@@ -20,6 +20,7 @@ class Note {
     };
 
     recordArea.value += this.inputKey;
+    recordArea.scrollTop = recordArea.scrollHeight;
     if (playArea !== document.activeElement)
       playArea.value += this.inputKey;
 
@@ -129,10 +130,6 @@ function playRecording() {
   notes.forEach(note => note.play(inputKey, true));
   setTimeout(() => playRecording(), DELAY);
 }
-
-recordArea.addEventListener("input", e => {
-  localStorage.recordArea = recordArea.value;
-})
 
 playArea.addEventListener("input", e => {
   localStorage.playArea = playArea.value;
