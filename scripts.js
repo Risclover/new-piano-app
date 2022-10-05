@@ -30,10 +30,13 @@ let chords = [];
 setInterval(() => {
   const newTime = new Date();
   if (newTime - time > CHORD_THRESHOLD) {
-    if (chords.length >= 2) {
-      playArea.value += `(${chords.join('')})`;
-    } else if (chords.length === 1) {
-      playArea.value += chords[0];
+    if (chords.length) {
+      if (chords.length >= 2) {
+        playArea.value += `(${chords.join('')})`;
+      } else if (chords.length === 1) {
+        playArea.value += chords[0];
+      }
+      updatePlayArea(playArea.value);
     }
     chords = [];
   }
