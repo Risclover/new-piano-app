@@ -43,22 +43,16 @@ textarea {
   border: 1px solid black;
 }
 
-#recordArea {
-  display: block;
-  background-color: rgb(240, 240, 240);
-}
-
 #playArea {
   display: block;
+  width: 470px;
+  padding: 2.5px 2.5px;
+  word-break: break-all;
+  overflow: hidden;
 }
 
 .button {
   padding: 0px 10px;
-}
-
-#recordWrapper {
-  display: flex;
-  margin-top: 15px;
 }
 
 #playWrapper {

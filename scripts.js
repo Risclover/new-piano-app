@@ -8,6 +8,7 @@ function updatePlayArea(song) {
   localStorage.playArea = song;
   playArea.value = song;
   window.history.pushState("object or string", "Title", "/new-piano-app/?song=" + playArea.value);
+  playArea.style.height = playArea.scrollHeight + 2 + 'px';
 }
 
 const urlSong = window.location.href.split("=")[1];
@@ -18,7 +19,6 @@ else updatePlayArea(playArea.value);
 if (localStorage.volume) volumeSlider.value = localStorage.volume;
 if (localStorage.dark === "true") enableDarkMode();
 
-playArea.scrollTop = playArea.scrollHeight;
 volumeTextInput.value = volumeSlider.value;
 
 const DELAY = 250;  // ms
