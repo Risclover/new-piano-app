@@ -60,10 +60,40 @@ document.addEventListener("keyup", function (e) {
   notes.forEach(note => note.raise(e.key));
 });
 
-document.addEventListener("mousedown", function (e) {
+piano.addEventListener("mousedown", function (e) {
   notes.forEach(note => note.play(e.target.innerText.toLowerCase()));
 });
 
-document.addEventListener("mouseup", function (e) {
+piano.addEventListener("mouseup", function (e) {
   notes.forEach(note => note.raise(e.target.innerText.toLowerCase()));
+});
+
+const h1 = document.querySelector("h1");
+const darkModeColor = "#181A1B";
+const lightModeColor = "#f7f7f7";
+let isDarkMode = false;
+sunIcon.style.display = "none";
+darkModeButton.addEventListener("click", function (e) {
+  isDarkMode = !isDarkMode;
+  if (isDarkMode) {
+    document.body.style.backgroundColor = darkModeColor;
+    h1.style.color = lightModeColor;
+    moonIcon.style.display = "none";
+    sunIcon.style.display = "block";
+    darkModeButton.style.backgroundColor = darkModeColor;
+  } else {
+    document.body.style.backgroundColor = lightModeColor;
+    h1.style.color = darkModeColor;
+    moonIcon.style.display = "block";
+    sunIcon.style.display = "none";
+    darkModeButton.style.backgroundColor = lightModeColor;
+  }
+})
+
+darkModeButton.addEventListener("mouseenter", function (e) {
+  darkModeButton.style.border = isDarkMode ? `1px solid ${lightModeColor}` : `1px solid ${darkModeColor}`;
+});
+
+darkModeButton.addEventListener("mouseleave", function (e) {
+  darkModeButton.style.border = isDarkMode ? `1px solid ${darkModeColor}` : `1px solid ${lightModeColor}`;
 });

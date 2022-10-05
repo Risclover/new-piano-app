@@ -4,12 +4,17 @@
   box-sizing: border-box;
 }
 
+svg {
+  width: 25px;
+  height: 24px;
+  /* border: 1px solid black; */
+}
+
 body,
 html {
   font-family: "Heebo", sans-serif;
   font-weight: 900;
   font-size: 20px;
-  background-color: #f7f7f7;
 }
 
 body {
@@ -17,7 +22,7 @@ body {
   text-align: center;
 }
 
-.piano {
+#piano {
   width: min-content;
   height: 250px;
   display: flex;
@@ -141,4 +146,15 @@ body {
 
 .black-4 {
   left: 66px;
+}
+
+#darkModeButton {
+  box-sizing: border-box;
+  margin-right: -50%;
+  border: 1px solid white;
+  background-color: white;
+}
+
+#sunIcon {
+  filter: invert(100%) sepia(0%) saturate(7492%) hue-rotate(7deg) brightness(104%) contrast(102%);
 }
