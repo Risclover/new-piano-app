@@ -1,7 +1,9 @@
 if (localStorage.recordArea) recordArea.value = localStorage.recordArea;
 if (localStorage.playArea) playArea.value = localStorage.playArea;
+if (localStorage.volume) volumeSlider.value = localStorage.volume;
 recordArea.scrollTop = recordArea.scrollHeight;
 playArea.scrollTop = playArea.scrollHeight;
+volumeTextInput.value = volumeSlider.value;
 
 const DELAY = 250;  // ms
 const CHORD_THRESHOLD = 15;  // ms
@@ -210,3 +212,13 @@ clearRecordAreaButton.addEventListener("click", e => {
   localStorage.recordArea = "";
   recordArea.value = "";
 })
+
+volumeSlider.addEventListener("input", e => {
+  volumeTextInput.value = volumeSlider.value;
+  localStorage.volume = volumeSlider.value;
+});
+
+volumeTextInput.addEventListener("input", e => {
+  volumeSlider.value = volumeTextInput.value;
+  localStorage.volume = volumeTextInput.value;
+});
