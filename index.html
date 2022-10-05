@@ -64,11 +64,16 @@
     </div>
   </div>
 
-  <textarea id="recordArea" readonly></textarea>
+  <div id="recordWrapper">
+    <textarea id="recordArea" readonly></textarea>
+    <button id="clearRecordAreaButton" class="button">Clear</button>
+  </div>
 
-  <textarea id="playArea" spellcheck="false">;p;p;jlkh..adhj..dyjk..d;p;p;jlkh..adhj..dkjh</textarea>
-
-  <button id="playButton">Play</button>
+  <div id="playWrapper">
+    <textarea id="playArea" spellcheck="false">;p;p;jlkh..adhj..dyjk..d;p;p;jlkh..adhj..dkjh</textarea>
+    <button id="playButton" class="button">Play</button>
+    <button id="clearPlayAreaButton" class="button">Clear</button>
+  </div>
 
   <script src="scripts.js"></script>
 </body>

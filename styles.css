@@ -52,6 +52,15 @@ textarea {
   display: block;
 }
 
-#playButton {
-  background-color: "red";
+.button {
+  padding: 0px 10px;
+}
+
+#recordWrapper {
+  display: flex;
+  margin-top: 15px;
+}
+
+#playWrapper {
+  display: flex;
 }

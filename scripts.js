@@ -4,7 +4,7 @@ recordArea.scrollTop = recordArea.scrollHeight;
 playArea.scrollTop = playArea.scrollHeight;
 
 const DELAY = 250;  // ms
-const CHORD_THRESHOLD = 15;
+const CHORD_THRESHOLD = 15;  // ms
 
 let time = new Date();
 let chords = [];
@@ -189,4 +189,14 @@ function playRecording() {
 
 playArea.addEventListener("input", e => {
   localStorage.playArea = playArea.value;
+})
+
+clearPlayAreaButton.addEventListener("click", e => {
+  localStorage.playArea = "";
+  playArea.value = "";
+})
+
+clearRecordAreaButton.addEventListener("click", e => {
+  localStorage.recordArea = "";
+  recordArea.value = "";
 })
