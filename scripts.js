@@ -1,6 +1,17 @@
+const h1 = document.querySelector("h1");
+const darkModeColor = "#181A1B";
+const lightModeColor = "#f7f7f7";
+let isDarkMode = false;
+sunIcon.style.display = "none";
+
 if (localStorage.recordArea) recordArea.value = localStorage.recordArea;
 if (localStorage.playArea) playArea.value = localStorage.playArea;
 if (localStorage.volume) volumeSlider.value = localStorage.volume;
+if (localStorage.dark === "true") {
+  isDarkMode = true;
+  enableDarkMode();
+}
+
 recordArea.scrollTop = recordArea.scrollHeight;
 playArea.scrollTop = playArea.scrollHeight;
 volumeTextInput.value = volumeSlider.value;
@@ -127,19 +138,20 @@ piano.addEventListener("mouseup", e => {
   notes.forEach(note => note.raise(e.target.innerText.toLowerCase()));
 });
 
-const h1 = document.querySelector("h1");
-const darkModeColor = "#181A1B";
-const lightModeColor = "#f7f7f7";
-let isDarkMode = false;
-sunIcon.style.display = "none";
+function enableDarkMode() {
+  document.body.style.backgroundColor = darkModeColor;
+  h1.style.color = lightModeColor;
+  moonIcon.style.display = "none";
+  sunIcon.style.display = "block";
+  darkModeButton.style.border = isDarkMode ? `1px solid ${darkModeColor}` : `1px solid ${lightModeColor}`;
+  darkModeButton.style.backgroundColor = darkModeColor;
+}
+
 darkModeButton.addEventListener("click", e => {
   isDarkMode = !isDarkMode;
+  localStorage.dark = isDarkMode;
   if (isDarkMode) {
-    document.body.style.backgroundColor = darkModeColor;
-    h1.style.color = lightModeColor;
-    moonIcon.style.display = "none";
-    sunIcon.style.display = "block";
-    darkModeButton.style.backgroundColor = darkModeColor;
+    enableDarkMode();
   } else {
     document.body.style.backgroundColor = lightModeColor;
     h1.style.color = darkModeColor;
