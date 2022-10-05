@@ -10,8 +10,6 @@ function updatePlayArea(song) {
   window.history.pushState("object or string", "Title", "/new-piano-app/?song=" + playArea.value);
 }
 
-if (localStorage.recordArea) recordArea.value = localStorage.recordArea;
-
 const urlSong = window.location.href.split("=")[1];
 if (urlSong) updatePlayArea(urlSong)
 else if (localStorage.playArea) updatePlayArea(localStorage.playArea);
@@ -20,7 +18,6 @@ else updatePlayArea(playArea.value);
 if (localStorage.volume) volumeSlider.value = localStorage.volume;
 if (localStorage.dark === "true") enableDarkMode();
 
-recordArea.scrollTop = recordArea.scrollHeight;
 playArea.scrollTop = playArea.scrollHeight;
 volumeTextInput.value = volumeSlider.value;
 
@@ -35,10 +32,8 @@ setInterval(() => {
   if (newTime - time > CHORD_THRESHOLD) {
     if (chords.length >= 2) {
       playArea.value += `(${chords.join('')})`;
-      recordArea.value += `(${chords.join('')})`;
     } else if (chords.length === 1) {
       playArea.value += chords[0];
-      recordArea.value += chords[0];
     }
     chords = [];
   }
@@ -71,7 +66,6 @@ class Note {
       return;
     };
 
-    recordArea.scrollTop = recordArea.scrollHeight;
     if (playArea !== document.activeElement) {
       const newTime = new Date();
       if (newTime - time <= CHORD_THRESHOLD) {
@@ -80,17 +74,14 @@ class Note {
       else {
         if (chords.length >= 2) {
           playArea.value += `(${chords.join('')})`;
-          recordArea.value += `(${chords.join('')})`;
         } else if (chords.length === 1) {
           playArea.value += chords[0];
-          recordArea.value += chords[0];
         }
         chords = [this.inputKey];
       }
       time = newTime;
     }
 
-    localStorage.recordArea = recordArea.value;
     updatePlayArea(playArea.value);
   }
 
@@ -226,11 +217,6 @@ playArea.addEventListener("input", e => {
 
 clearPlayAreaButton.addEventListener("click", e => {
   updatePlayArea("");
-})
-
-clearRecordAreaButton.addEventListener("click", e => {
-  localStorage.recordArea = "";
-  recordArea.value = "";
 })
 
 volumeSlider.addEventListener("input", e => {
