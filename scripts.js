@@ -6,6 +6,7 @@ sunIcon.style.display = "none";
 
 if (localStorage.recordArea) recordArea.value = localStorage.recordArea;
 if (localStorage.playArea) playArea.value = localStorage.playArea;
+window.history.pushState("object or string", "Title", "/?song=" + playArea.value);
 if (localStorage.volume) volumeSlider.value = localStorage.volume;
 if (localStorage.dark === "true") {
   isDarkMode = true;
@@ -15,6 +16,9 @@ if (localStorage.dark === "true") {
 recordArea.scrollTop = recordArea.scrollHeight;
 playArea.scrollTop = playArea.scrollHeight;
 volumeTextInput.value = volumeSlider.value;
+
+const urlSong = window.location.href.split("=")[1];
+if (urlSong) playArea.value = urlSong;
 
 const DELAY = 250;  // ms
 const CHORD_THRESHOLD = 15;  // ms
@@ -74,6 +78,7 @@ class Note {
 
     localStorage.recordArea = recordArea.value;
     localStorage.playArea = playArea.value;
+    window.history.pushState("object or string", "Title", "/?song=" + playArea.value);
   }
 
   lower() {
@@ -213,10 +218,12 @@ function playRecording() {
 
 playArea.addEventListener("input", e => {
   localStorage.playArea = playArea.value;
+  window.history.pushState("object or string", "Title", "/?song=" + playArea.value);
 })
 
 clearPlayAreaButton.addEventListener("click", e => {
   localStorage.playArea = "";
+  window.history.pushState("object or string", "Title", "/?song=" + playArea.value);
   playArea.value = "";
 })
 
