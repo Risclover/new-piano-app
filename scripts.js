@@ -82,7 +82,7 @@ function playAudio(src) {
   const source = document.createElement("source");
   source.src = src;
   audio.appendChild(source);
-  audio.volume = 0.2;
+  audio.volume = volumeSlider.value;
   audio.play();
   // TODO: Do we need to clean up these DOM elements?
 }
