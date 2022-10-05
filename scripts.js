@@ -4,6 +4,25 @@ recordArea.scrollTop = recordArea.scrollHeight;
 playArea.scrollTop = playArea.scrollHeight;
 
 const DELAY = 250;  // ms
+const CHORD_THRESHOLD = 15;
+
+let time = new Date();
+let chords = [];
+
+setInterval(() => {
+  const newTime = new Date();
+  if (newTime - time > CHORD_THRESHOLD) {
+    if (chords.length >= 2) {
+      playArea.value += `(${chords.join('')})`;
+      recordArea.value += `(${chords.join('')})`;
+    } else if (chords.length === 1) {
+      playArea.value += chords[0];
+      recordArea.value += chords[0];
+    }
+    chords = [];
+  }
+  time = newTime;
+}, CHORD_THRESHOLD);
 
 class Note {
   constructor(...params) {
@@ -21,10 +40,24 @@ class Note {
       return;
     };
 
-    recordArea.value += this.inputKey;
     recordArea.scrollTop = recordArea.scrollHeight;
-    if (playArea !== document.activeElement)
-      playArea.value += this.inputKey;
+    if (playArea !== document.activeElement) {
+      const newTime = new Date();
+      if (newTime - time <= CHORD_THRESHOLD) {
+        chords.push(this.inputKey);
+      }
+      else {
+        if (chords.length >= 2) {
+          playArea.value += `(${chords.join('')})`;
+          recordArea.value += `(${chords.join('')})`;
+        } else if (chords.length === 1) {
+          playArea.value += chords[0];
+          recordArea.value += chords[0];
+        }
+        chords = [this.inputKey];
+      }
+      time = newTime;
+    }
 
     localStorage.recordArea = recordArea.value;
     localStorage.playArea = playArea.value;
@@ -44,12 +77,13 @@ class Note {
   }
 }
 
-function playAudio(path) {
-  const sound = new Audio();
+function playAudio(src) {
+  const audio = new Audio();
   const source = document.createElement("source");
-  source.src = path;
-  sound.appendChild(source);
-  sound.play();
+  source.src = src;
+  audio.appendChild(source);
+  audio.play();
+  // TODO: Do we need to clean up these DOM elements?
 }
 
 const notes = [
@@ -120,16 +154,36 @@ darkModeButton.addEventListener("mouseleave", e => {
   darkModeButton.style.border = isDarkMode ? `1px solid ${darkModeColor}` : `1px solid ${lightModeColor}`;
 });
 
-let recording = [];
+let notesToPlay = [];
+let isChord = false;
 playButton.addEventListener("click", e => {
-  recording = playArea.value.split('');
+  notesToPlay = [];
+  for (let i = 0; i < playArea.value.length; i++) {
+    const symbol = playArea.value[i];
+    if (symbol === "(") {
+      notesToPlay.push([]);
+      isChord = true;
+      continue;
+    }
+    else if (symbol === ")") {
+      isChord = false;
+      continue;
+    }
+
+    if (isChord) {
+      notesToPlay[notesToPlay.length - 1].push(symbol);
+    }
+    else {
+      notesToPlay.push([symbol]);
+    }
+  }
   playRecording();
 })
 
 function playRecording() {
-  if (recording.length === 0) return;
-  const inputKey = recording.shift();
-  notes.forEach(note => note.play(inputKey, true));
+  if (notesToPlay.length === 0) return;
+  const inputKeys = notesToPlay.shift();  // TODO: Use an index instead of mutating. Clear after max index
+  inputKeys.forEach(inputKey => notes.forEach(note => note.play(inputKey, true)))
   setTimeout(() => playRecording(), DELAY);
 }
 
